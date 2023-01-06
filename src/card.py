@@ -1,13 +1,11 @@
-names = ["JACK", "QUEEN", "KING"]
-
+names = ["JACK", "QUEEN", "KING", "ACE"]
+numericNames = [n for n in range(2, 10)]
 
 class Card:
-    def __init__(self, name, value=None):
+    def __init__(self, name):
         self.name = name
 
-        if value is not None:
-            self.value = value
-        elif self.name.isnumeric():
+        if self.name.isnumeric():
             self.value = int(self.name)
         elif self.name.upper() in names:
             self.value = 10
