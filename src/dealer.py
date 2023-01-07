@@ -17,8 +17,7 @@ class Dealer(Player):
             self.add_card(deck.draw())
 
     def add_card(self, card):
-        card.value = self.check_card_value(card)
         self.hand.append(card)
-        self.score += card.value
+        self.calculate_hand_score()
         self.check_player_state()
 
