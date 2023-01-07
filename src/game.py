@@ -1,6 +1,7 @@
 from src.deck import Deck
 from src.player import Player
 from src.dealer import Dealer
+from src.utils import *
 
 
 class Game:
@@ -37,12 +38,13 @@ class Game:
             if player.name == "Dealer":
                 self.dealer.hand[0].set_hidden(False)
             while player.player_can_continue():
-                #show player's hand and score before asking to hit or stand
-                print(f"{player.name}'s hand is {list(str(card) for card in player.hand)} with a score of {player.score}.")
+                # show player's hand and score before asking to hit or stand
+                print_player(player)
                 choice = input(f"{player.name}, would you like to hit or stand? ")
                 if choice.lower() == "hit" or choice.lower() == "h":
                     player.add_card(self.deck.draw())
-                    print(f"{player.name}'s hand is {list(str(card) for card in player.hand)} with a score of {player.score}.")
+                    print(
+                        f"{player.name}'s hand is {list(str(card) for card in player.hand)} with a score of {player.score}.")
                 elif choice.lower() == "stand" or choice.lower() == "s":
                     player.stands()
                 else:

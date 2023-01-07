@@ -28,3 +28,9 @@ class Card:
 
     def set_hidden(self, boolean):
         self.hidden = boolean
+
+    def is_ace(self):
+        if isinstance(self.name, str):
+            if self.name.upper() == "ACE":
+                return True
+        return False

@@ -18,37 +18,37 @@ class Player:
         self.stand = True
 
     def add_card(self, card):
-        if isinstance(card.name, str):
-            if card.name.upper() == "ACE":
-                if not self.firstAce:
-                    card = self.choose_ace_value(card)
-                    self.hand.append(card)
-                    self.firstAce = True
-                    self.score += card.value
-                    self.check_player_state()
-                    return
-            else:
+        if card.is_ace():
+            if not self.firstAce:
+                card = self.choose_ace_value(card)
                 self.hand.append(card)
+                self.firstAce = True
                 self.score += card.value
                 self.check_player_state()
-
+                return
         self.hand.append(card)
         self.calculate_hand_score()
         self.check_player_state()
 
     def calculate_hand_score(self):
+        current_score = 0
+        for card in self.hand:
+            if card.is_ace():
+                continue
+            current_score += card.value
         self.score = 0
         for card in self.hand:
-            card.value = self.check_card_value(card)
+            card.value = self.check_card_value(card=card, current_score=current_score)
+            current_score += card.value
             self.score += card.value
 
-    def check_card_value(self, card):
-        if isinstance(card.name, str):
-            if card.name.upper() == "ACE":
-                if self.score + 11 > 21:
-                    card.value = 1
-                else:
-                    card.value = 11
+    def check_card_value(self, card, current_score):
+        if card.is_ace():
+            if current_score + 11 > 21:
+                print("current score: " + str(current_score))
+                card.value = 1
+            else:
+                card.value = 11
         return card.value
 
     def check_player_state(self):
