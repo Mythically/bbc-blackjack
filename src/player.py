@@ -6,6 +6,7 @@ class Player:
         self.bust = False
         self.blackjack = False
         self.stand = False
+        self.firstAce = False
 
     # def __str__(self):
     #     hand_string = ""
@@ -17,15 +18,37 @@ class Player:
         self.stand = True
 
     def add_card(self, card):
-        card.value = self.check_card_value(card)
+        if isinstance(card.name, str):
+            if card.name.upper() == "ACE":
+                if not self.firstAce:
+                    card = self.choose_ace_value(card)
+                    self.hand.append(card)
+                    self.firstAce = True
+                    self.score += card.value
+                    self.check_player_state()
+                    return
+            else:
+                self.hand.append(card)
+                self.score += card.value
+                self.check_player_state()
+
         self.hand.append(card)
-        self.score += card.value
+        self.calculate_hand_score()
         self.check_player_state()
+
+    def calculate_hand_score(self):
+        self.score = 0
+        for card in self.hand:
+            card.value = self.check_card_value(card)
+            self.score += card.value
 
     def check_card_value(self, card):
         if isinstance(card.name, str):
             if card.name.upper() == "ACE":
-                return self.choose_ace_value(card).value
+                if self.score + 11 > 21:
+                    card.value = 1
+                else:
+                    card.value = 11
         return card.value
 
     def check_player_state(self):

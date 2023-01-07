@@ -20,19 +20,5 @@ class Dealer(Player):
         card.value = self.check_card_value(card)
         self.hand.append(card)
         self.score += card.value
-        self.check_dealer_state()
+        self.check_player_state()
 
-    def check_card_value(self, card):
-        if isinstance(card.name, str):
-            if card.name.upper() == "ACE":
-                if self.score + 11 > 21:
-                    card.value = 1
-                else:
-                    card.value = 11
-        return card.value
-
-    def check_dealer_state(self):
-        if self.score == 21:
-            self.blackjack = True
-        if self.score > 21:
-            self.bust = True

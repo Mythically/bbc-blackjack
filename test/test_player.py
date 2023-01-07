@@ -43,3 +43,16 @@ class TestPlayer(unittest.TestCase):
     def test_player_str(self):
         player = Player("Myth")
         self.assertEqual(str(player.hand), "[]")
+
+    def test_player_two_aces(self):
+        player = Player("Myth")
+        player.add_card(Card("ACE"))
+        player.add_card(Card("ACE"))
+        self.assertEqual(player.score, 12)
+
+    def test_player_two_aces_nine(self):
+        player = Player("Myth")
+        player.add_card(Card("ACE"))
+        player.add_card(Card("ACE"))
+        player.add_card(Card(9))
+        self.assertEqual(player.score, 21)
